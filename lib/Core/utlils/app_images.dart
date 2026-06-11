@@ -1,5 +1,5 @@
 class AppImages {
-  static const String splashViewImage =
+  static const String appLogo =
       'assets/images/appLogo.png';
 
   static const String onBoardingFirstScreen =
@@ -10,4 +10,12 @@ class AppImages {
   static const String onBoardingThirdScreen =
       'assets/images/onBoarding_3.png';
 
+  static const String googleLogo =
+      'assets/images/googleIcon.png';
+
+  static const String facebookLogo =
+      'assets/images/facebookIcon.png';
+
+  static const String loginLogo =
+      'assets/images/loginLogo.png';
 }
