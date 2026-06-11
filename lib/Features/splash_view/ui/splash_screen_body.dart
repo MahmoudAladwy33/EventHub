@@ -17,7 +17,6 @@ class _SplashScreenBodyState extends State<SplashScreenBody> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
       GoRouter.of(context).push(AppRouter.kOnBoardingScreen);
@@ -30,7 +29,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody> {
       color: Colors.white,
       child: const Center(
         child: Image(
-          image: AssetImage(AppImages.splashViewImage),
+          image: AssetImage(AppImages.appLogo),
         ),
       ),
     );

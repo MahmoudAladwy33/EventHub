@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Features/onBoarding/ui/on_boarding_screen_temp.dart';
+import 'package:go_router/go_router.dart';
+import '../../../Core/routing/app_router.dart';
 import '../../../Core/theme/colors_manager.dart';
 import '../../../Core/utlils/app_images.dart';
 
@@ -39,7 +41,7 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
         curve: Curves.easeInOut,
       );
     } else {
-      // TODO: Navigate to main app
+      GoRouter.of(context).push(AppRouter.kSignInScreen);
     }
   }
 
@@ -78,7 +80,7 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
 
                   TextButton(
                     onPressed: () {
-                      // TODO: Navigate to main app
+                      GoRouter.of(context).push(AppRouter.kSignInScreen);
                     },
                     child: Text(
                       'Skip',

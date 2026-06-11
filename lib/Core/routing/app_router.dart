@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Features/auth/sign_in/ui/sign_in_screen.dart';
+import 'package:flutter_project/Features/auth/sign_up/sign_up_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Features/onBoarding/on_boarding_screen.dart';
@@ -7,7 +9,7 @@ import '../../Features/splash_view/splash_screen.dart';
 
 abstract class AppRouter {
   static const kOnBoardingScreen = '/onboarding';
-  static const kLoginScreen = '/login';
+  static const kSignInScreen = '/signin';
   static const kSignUpScreen = '/signup';
   
 
@@ -25,21 +27,19 @@ abstract class AppRouter {
           return const OnBoardingScreen();
         },
        ),
-      // GoRoute(
-      //   path: kLoginScreen,
-      //   builder: (context, state) {
-      //      return const LoginScreen();
-      //   },
-      // ),
+      GoRoute(
+        path: kSignInScreen,
+        builder: (context, state) {
+           return const SignInScreen();
+        },
+      ),
     
-      // GoRoute(
-      //   path: kSignUpScreen,
-      //   builder: (context, state) {
-        
-         
-      //   return const SignUpScreen();
-      //   },
-      // ),
+      GoRoute(
+        path: kSignUpScreen,
+        builder: (context, state) {
+        return const SignUpScreen();
+        },
+      ),
 
      
     ],
