@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../Features/splash_view/splash_screen.dart';
+
 
 abstract class AppRouter {
   static const kOnBoardingScreen = '/onboarding';
@@ -16,27 +18,27 @@ abstract class AppRouter {
           return const SplashScreen();
         },
       ),
-      GoRoute(
-        path: kOnBoardingScreen,
-        builder: (context, state) {
-          return const OnBoardingScreen();
-        },
-      ),
-      GoRoute(
-        path: kLoginScreen,
-        builder: (context, state) {
-           return const LoginScreen();
-        },
-      ),
+      // GoRoute(
+      //   path: kOnBoardingScreen,
+      //   builder: (context, state) {
+      //     return const OnBoardingScreen();
+      //   },
+      // ),
+      // GoRoute(
+      //   path: kLoginScreen,
+      //   builder: (context, state) {
+      //      return const LoginScreen();
+      //   },
+      // ),
     
-      GoRoute(
-        path: kSignUpScreen,
-        builder: (context, state) {
+      // GoRoute(
+      //   path: kSignUpScreen,
+      //   builder: (context, state) {
         
          
-        return const SignUpScreen();
-        },
-      ),
+      //   return const SignUpScreen();
+      //   },
+      // ),
 
      
     ],
