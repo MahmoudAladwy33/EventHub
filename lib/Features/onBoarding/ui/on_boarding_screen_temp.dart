@@ -16,7 +16,6 @@ class OnBoardingScreenTemp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Upper section: image fills ~60% of screen
         Expanded(
           flex: 6,
           child: Image.asset(
@@ -25,8 +24,6 @@ class OnBoardingScreenTemp extends StatelessWidget {
             width: double.infinity,
           ),
         ),
-
-        // Lower section: text content on white background
         Expanded(
           flex: 4,
           child: Padding(

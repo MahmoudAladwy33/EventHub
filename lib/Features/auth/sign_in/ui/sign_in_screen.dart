@@ -134,8 +134,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   onPressed: () {},
                 ),
                 const SizedBox(height: 28),
-
-                // Bottom link
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

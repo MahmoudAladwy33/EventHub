@@ -32,7 +32,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _signUp() {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() => _isLoading = true);
-      // TODO: call auth logic
       Future.delayed(const Duration(seconds: 2), () {
         if (mounted) setState(() => _isLoading = false);
       });
