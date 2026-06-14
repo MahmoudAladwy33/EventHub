@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project/Features/onBoarding/ui/on_boarding_screen_temp.dart';
 import 'package:go_router/go_router.dart';
 import '../../../Core/routing/app_router.dart';
-import '../../../Core/theme/colors_manager.dart';
+import '../../../Core/theme/app_colors.dart';
 import '../../../Core/utlils/app_images.dart';
 
 class OnBoardingScreenBody extends StatefulWidget {
@@ -102,7 +102,7 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
                         height: 8,
                         decoration: BoxDecoration(
                           color: _currentPage == index
-                              ?  ColorsManager.mainBlue
+                              ?  AppColors.onboardingBase
                               : Colors.grey[300],
                           borderRadius: BorderRadius.circular(4),
                         ),
@@ -116,7 +116,7 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
                     child: Text(
                       _currentPage == _pages.length - 1 ? 'Start' : 'Next',
                       style: const TextStyle(
-                        color: ColorsManager.mainBlue,
+                        color: AppColors.onboardingBase,
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),

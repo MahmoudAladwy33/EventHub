@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Features/auth/sign_in/ui/sign_in_screen.dart';
-import 'package:flutter_project/Features/auth/sign_up/sign_up_screen.dart';
+import 'package:flutter_project/Features/auth/sign_up/ui/sign_up_screen.dart';
+import 'package:flutter_project/Features/home/ui/views/event_details_view.dart';
+import 'package:flutter_project/Features/home/ui/views/events_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Features/onBoarding/on_boarding_screen.dart';
@@ -11,6 +13,7 @@ abstract class AppRouter {
   static const kOnBoardingScreen = '/onboarding';
   static const kSignInScreen = '/signin';
   static const kSignUpScreen = '/signup';
+  static const kEventsScreen = '/events';
   
 
   static final router = GoRouter(
@@ -40,7 +43,12 @@ abstract class AppRouter {
         return const SignUpScreen();
         },
       ),
-
+      GoRoute(
+        path: kEventsScreen,
+        builder: (context, state) {
+          return const EventDetailsView();
+        },
+      ),
      
     ],
   );

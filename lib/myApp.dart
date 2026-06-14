@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Core/routing/app_router.dart';
-import 'package:flutter_project/Core/theme/colors_manager.dart';
+import 'package:flutter_project/Core/theme/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
         routerConfig: AppRouter.router,
         title: 'My App',
         theme: ThemeData(
-          primaryColor: ColorsManager.mainBlue,
+          primaryColor: AppColors.primary,
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.poppinsTextTheme(),
           textSelectionTheme: TextSelectionThemeData(
-            cursorColor: ColorsManager.mainBlue,
-            selectionColor: ColorsManager.mainBlue.withOpacity(0.3),
-            selectionHandleColor: ColorsManager.mainBlue,
+            cursorColor: AppColors.primary,
+            selectionColor: AppColors.primary.withOpacity(0.3),
+            selectionHandleColor: AppColors.primary,
           ),
         ),
         debugShowCheckedModeBanner: false,

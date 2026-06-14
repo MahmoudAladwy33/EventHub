@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../Core/utlils/app_images.dart';
-import '../ui/widgets/auth_divider.dart';
-import '../ui/widgets/auth_primary_button.dart';
-import '../ui/widgets/auth_text_field.dart';
-import '../ui/widgets/social_login_button.dart';
+import '../../../../Core/utlils/app_images.dart';
+import '../../ui/widgets/auth_divider.dart';
+import '../../ui/widgets/auth_primary_button.dart';
+import '../../ui/widgets/auth_text_field.dart';
+import '../../ui/widgets/social_login_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

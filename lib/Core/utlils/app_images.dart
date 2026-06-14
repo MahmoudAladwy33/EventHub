@@ -18,4 +18,10 @@ class AppImages {
 
   static const String loginLogo =
       'assets/images/loginLogo.png';
+
+  static const String noUpcomingEvent =
+      'assets/images/NoUpcomingEvent.png';
+
+  static const String eventDetails =
+      'assets/images/eventDetails.png';
 }
