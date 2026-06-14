@@ -114,7 +114,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 AuthPrimaryButton(
                   label: 'SIGN IN',
-                  onPressed: _signIn,
+                  onPressed: (){ GoRouter.of(context).push(AppRouter.kEventsScreen);
+                    },
+                  //_signIn,
                   isLoading: _isLoading,
                 ),
                 const SizedBox(height: 24),
