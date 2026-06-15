@@ -114,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 AuthPrimaryButton(
                   label: 'SIGN IN',
-                  onPressed: (){ GoRouter.of(context).push(AppRouter.kEventsScreen);
+                  onPressed: (){ GoRouter.of(context).push(AppRouter.kMainLayoutScreen);
                     },
                   //_signIn,
                   isLoading: _isLoading,

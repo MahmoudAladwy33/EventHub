@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project/Features/home/ui/widgets/tab_item.dart';
+import 'package:flutter_project/Features/events/ui/widgets/tab_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../views/events_view.dart';
+import '../../../events/ui/views/events_view.dart';
 
 class EventsTabs extends StatelessWidget {
   const EventsTabs({

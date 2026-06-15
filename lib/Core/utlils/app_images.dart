@@ -24,4 +24,10 @@ class AppImages {
 
   static const String eventDetails =
       'assets/images/eventDetails.png';
+
+  static const String womanAvatar =
+      'assets/images/woman_avatar.png';
+
+  static const String manAvatar =
+      'assets/images/man_avatar.png';
 }

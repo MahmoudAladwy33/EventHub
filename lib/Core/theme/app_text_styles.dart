@@ -98,4 +98,38 @@ class AppTextStyles {
       color: AppColors.primary,
       fontWeight:AppFontWeight.regular
   );
+
+  static const TextStyle font18SemiBold = AirbnbCerealTextStyle(
+    fontSize: 18,
+    color: AppColors.redSports,
+    fontWeight: AppFontWeight.semiBold,
+  );
+
+  static const TextStyle font10Regular = AirbnbCerealTextStyle(
+    fontSize: 10,
+    fontWeight: AppFontWeight.regular,
+    color: AppColors.redSports,
+  );
+
+  static const TextStyle font12Regular = AirbnbCerealTextStyle(
+    fontSize: 12,
+    fontWeight: AppFontWeight.regular,
+    color: AppColors.primary
+  );
+
+  static const TextStyle font16Medium = AirbnbCerealTextStyle(
+    fontSize: 16,
+    fontWeight: AppFontWeight.medium,
+    color: AppColors.black,
+  );
+
+  static const TextStyle font14Regular = AirbnbCerealTextStyle(
+    fontSize: 14,
+    fontWeight: AppFontWeight.regular,
+    color: AppColors.black,
+  );
+}
+
+extension TextStyleExtension on TextStyle {
+  TextStyle withColor(Color color) => copyWith(color: color);
 }

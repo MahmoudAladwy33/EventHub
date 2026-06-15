@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Core/routing/app_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../Core/theme/app_colors.dart';
 import '../../../../Core/theme/app_text_styles.dart';
@@ -15,7 +17,7 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: false,
       leading: IconButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => GoRouter.of(context).push(AppRouter.kMainLayoutScreen),
         icon: Icon(
           Icons.arrow_back,
           color: AppColors.black,

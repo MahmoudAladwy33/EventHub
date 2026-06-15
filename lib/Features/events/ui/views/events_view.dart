@@ -17,7 +17,6 @@ enum EventsTab {
 class EventsView extends StatefulWidget {
   const EventsView({super.key});
 
-  static const routerPath = "/eventsView";
 
   @override
   State<EventsView> createState() => _EventsViewState();
