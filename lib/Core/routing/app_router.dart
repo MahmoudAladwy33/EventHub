@@ -3,6 +3,7 @@ import 'package:flutter_project/Features/auth/sign_in/ui/sign_in_screen.dart';
 import 'package:flutter_project/Features/auth/sign_up/ui/sign_up_screen.dart';
 import 'package:flutter_project/Features/events/ui/views/event_details_view.dart';
 import 'package:flutter_project/Features/events/ui/views/events_view.dart';
+import 'package:flutter_project/Features/events/ui/views/search_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Features/home/ui/views/main_layout_view.dart';
@@ -17,7 +18,10 @@ abstract class AppRouter {
   static const kEventDetailsScreen = '/eventDetails';
   static const kEventListScreen = '/eventList';
   static const kMainLayoutScreen = '/mainlayout';
-  
+  static const kSearchScreen = '/searchView';
+  static const kUpComingEventsListScreen = '/upcomingEventsList';
+
+
 
   static final router = GoRouter(
     routes: [
@@ -62,6 +66,14 @@ abstract class AppRouter {
         path: kEventListScreen ,
         builder: (context, state) => const EventsView(),
       ),
+      GoRoute(
+        path: kSearchScreen ,
+        builder: (context, state) => const SearchView(),
+      ),
+      // GoRoute(
+      //   path: kUpComingEventsListScreen ,
+      //   builder: (context, state) => const (),
+      // ),
     ],
   );
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../Core/theme/app_colors.dart';
+import '../../data/event_mock_data.dart';
 import '../widgets/empty_events_view.dart';
 import '../widgets/event_app_bar.dart';
 import '../widgets/events_list.dart';
@@ -27,8 +28,8 @@ class _EventsViewState extends State<EventsView> {
 
   @override
   Widget build(BuildContext context) {
-    final upcomingEvents = <dynamic>[];
-    final pastEvents = <dynamic>[];
+    final upcomingEvents = EventMockDataLists.upcomingEvents;
+    final pastEvents = EventMockDataLists.pastEvents;
 
     return Scaffold(
       backgroundColor: AppColors.white,
