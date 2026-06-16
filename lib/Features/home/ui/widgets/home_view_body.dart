@@ -7,8 +7,8 @@ import '../widgets/section_title.dart';
 import '../widgets/upcoming_events_list.dart';
 
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class HomeViewBody extends StatelessWidget {
+  const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
