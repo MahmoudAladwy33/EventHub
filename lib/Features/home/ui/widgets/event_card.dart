@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/Core/utlils/app_images.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../Core/routing/app_router.dart';
 import '../../../../Core/theme/app_colors.dart';
 import '../../../../Core/theme/app_text_styles.dart';
-
+import '../../../events/data/entities/saved_event_model.dart' as flutter_project;
+import '../../../events/logic/cubit/saved_events_cubit.dart' as flutter_project;
+import '../../../events/logic/cubit/saved_events_state.dart' as flutter_project;
 
 class EventCard extends StatelessWidget {
+  final String id;
   final String title;
   final String imagePath;
   final String date;
@@ -16,6 +20,7 @@ class EventCard extends StatelessWidget {
 
   const EventCard({
     super.key,
+    required this.id,
     required this.title,
     required this.imagePath,
     required this.date,
@@ -28,7 +33,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.kEventDetailsScreen);
+        GoRouter.of(context).push('${AppRouter.kEventDetailsScreen}/$id');
       },
       child: Container(
         width: 250,
@@ -52,19 +57,31 @@ class EventCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    imagePath,
-                    height: 130,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: 130,
-                      width: double.infinity,
-                      color: AppColors.primaryColorShade100,
-                      child: const Center(child: Icon(Icons.image, size: 50, color: AppColors.primaryColorShade300)),
-                    ),
-                  ),
+                  child: imagePath.startsWith('http')
+                    ? Image.network(
+                        imagePath,
+                        height: 130,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          height: 130,
+                          width: double.infinity,
+                          color: AppColors.primaryColorShade100,
+                          child: const Center(child: Icon(Icons.image, size: 50, color: AppColors.primaryColorShade300)),
+                        ),
+                      )
+                    : Image.asset(
+                        imagePath,
+                        height: 130,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          height: 130,
+                          width: double.infinity,
+                          color: AppColors.primaryColorShade100,
+                          child: const Center(child: Icon(Icons.image, size: 50, color: AppColors.primaryColorShade300)),
+                        ),
+                      ),
                 ),
                 Positioned(
                   top: 8,
@@ -92,17 +109,36 @@ class EventCard extends StatelessWidget {
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withAlpha((255 * 0.9).toInt()),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.bookmark_border,
-                      color: AppColors.redSports,
-                      size: 20,
-                    ),
+                  child: BlocBuilder<flutter_project.SavedEventsCubit, flutter_project.SavedEventsState>(
+                    builder: (context, state) {
+                      final isSaved = context.read<flutter_project.SavedEventsCubit>().isEventSaved(id);
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<flutter_project.SavedEventsCubit>().toggleSavedEvent(
+                            flutter_project.SavedEventModel(
+                              id: id,
+                              title: title,
+                              imagePath: imagePath,
+                              date: date,
+                              month: month,
+                              location: location,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.white.withAlpha((255 * 0.9).toInt()),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            isSaved ? Icons.bookmark : Icons.bookmark_border,
+                            color: AppColors.redSports,
+                            size: 20,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

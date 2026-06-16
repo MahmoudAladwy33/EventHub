@@ -51,9 +51,10 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: kEventDetailsScreen,
+        path: '$kEventDetailsScreen/:id',
         builder: (context, state) {
-          return const EventDetailsView();
+          final id = state.pathParameters['id']!;
+          return EventDetailsView(eventId: id);
         },
       ),
 

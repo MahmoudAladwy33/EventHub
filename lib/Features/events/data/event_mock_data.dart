@@ -1,5 +1,3 @@
-import '../../../Core/utlils/app_images.dart';
-
 class EventMockData {
   final String title;
   final String image;
@@ -22,7 +20,7 @@ class EventMockDataLists {
   static final List<EventMockData> upcomingEvents = [
     EventMockData(
       title: 'Jo Malone London’s Mother’s Day Presents',
-      image: AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=400',
       date: '28',
       month: 'APR',
       address: 'Radius Gallery • Santa Cruz, CA',
@@ -30,7 +28,7 @@ class EventMockDataLists {
     ),
     EventMockData(
       title: 'A Virtual Evening of Smooth Jazz',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=400',
       date: '01',
       month: 'MAY',
       address: 'Lot 13 • Oakland, CA',
@@ -38,7 +36,7 @@ class EventMockDataLists {
     ),
     EventMockData(
       title: 'Women\'s Leadership Conference 2021',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400',
       date: '24',
       month: 'APR',
       address: '53 Bush St • San Francisco, CA',
@@ -46,7 +44,7 @@ class EventMockDataLists {
     ),
     EventMockData(
       title: 'International Kids Safe Parents Night Out',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400',
       date: '23',
       month: 'APR',
       address: 'Lot 13 • Oakland, CA',
@@ -54,7 +52,7 @@ class EventMockDataLists {
     ),
     EventMockData(
       title: 'Collectivity Plays the Music of Jimi',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=400',
       date: '21',
       month: 'JUN',
       address: 'Longboard Margarita Bar • Pacifica, CA',
@@ -62,7 +60,7 @@ class EventMockDataLists {
     ),
     EventMockData(
       title: 'International Gala Music Festival',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=400',
       date: '25',
       month: 'APR',
       address: 'Lot 13 • Oakland, CA',
@@ -73,7 +71,7 @@ class EventMockDataLists {
   static final List<EventMockData> pastEvents = [
     EventMockData(
       title: 'International Gala Music Festival',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=400',
       date: '25',
       month: 'APR',
       address: 'Lot 13 • Oakland, CA',
@@ -81,7 +79,7 @@ class EventMockDataLists {
     ),
     EventMockData(
       title: 'Women\'s Leadership Conference 2021',
-      image:  AppImages.eventDetails,
+      image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400',
       date: '24',
       month: 'APR',
       address: '53 Bush St • San Francisco, CA',

@@ -1,16 +1,50 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../Core/theme/app_colors.dart';
 import '../../../../../Core/theme/app_text_styles.dart';
+import '../../../data/entities/event_query.dart';
+import '../../../logic/cubit/search_cubit.dart';
 import 'filter_categories_row.dart';
 import 'filter_location_section.dart';
 import 'filter_price_slider.dart';
 import 'filter_time_date_section.dart';
 
-class FilterBottomSheet extends StatelessWidget {
+class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
+
+  @override
+  State<FilterBottomSheet> createState() => _FilterBottomSheetState();
+}
+
+class _FilterBottomSheetState extends State<FilterBottomSheet> {
+  String _selectedCategory = 'Sports';
+  int _selectedDateChip = 1; // 0: Today, 1: Tomorrow, 2: This week
+  RangeValues _priceRange = const RangeValues(20, 120);
+
+  EventDatePreset _getPreset() {
+    switch (_selectedDateChip) {
+      case 0:
+        return EventDatePreset.today;
+      case 2:
+        return EventDatePreset.thisWeek;
+      case 1:
+      default:
+        return EventDatePreset.tomorrow;
+    }
+  }
+
+  void _applyFilters() {
+    context.read<SearchCubit>().applyFilters(
+      classificationName: _selectedCategory,
+      datePreset: _getPreset(),
+      customDate: null, // Since we don't implement full calendar yet
+      minPrice: _priceRange.start,
+      maxPrice: _priceRange.end,
+    );
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +81,34 @@ class FilterBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-            const FilterCategoriesRow(),
+            FilterCategoriesRow(
+              selectedCategory: _selectedCategory,
+              onCategoryChanged: (cat) => setState(() => _selectedCategory = cat),
+            ),
             SizedBox(height: 20.h),
-            const FilterTimeDateSection(),
+            FilterTimeDateSection(
+              selectedChip: _selectedDateChip,
+              onChipChanged: (index) => setState(() => _selectedDateChip = index),
+            ),
             SizedBox(height: 20.h),
             const FilterLocationSection(),
             SizedBox(height: 20.h),
-            const FilterPriceSlider(),
+            FilterPriceSlider(
+              currentRangeValues: _priceRange,
+              onChanged: (values) => setState(() => _priceRange = values),
+            ),
             SizedBox(height: 32.h),
             Row(
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      setState(() {
+                        _selectedCategory = 'Sports';
+                        _selectedDateChip = 1;
+                        _priceRange = const RangeValues(20, 120);
+                      });
+                    },
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: AppColors.greyLight),
                       shape: RoundedRectangleBorder(
@@ -79,7 +128,7 @@ class FilterBottomSheet extends StatelessWidget {
                 SizedBox(width: 16.w),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: _applyFilters,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(

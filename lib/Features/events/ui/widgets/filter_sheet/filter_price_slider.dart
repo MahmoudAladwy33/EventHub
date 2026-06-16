@@ -5,15 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../Core/theme/app_colors.dart';
 import '../../../../../Core/theme/app_text_styles.dart';
 
-class FilterPriceSlider extends StatefulWidget {
-  const FilterPriceSlider({super.key});
+class FilterPriceSlider extends StatelessWidget {
+  final RangeValues currentRangeValues;
+  final ValueChanged<RangeValues> onChanged;
 
-  @override
-  State<FilterPriceSlider> createState() => _FilterPriceSliderState();
-}
-
-class _FilterPriceSliderState extends State<FilterPriceSlider> {
-  RangeValues _currentRangeValues = const RangeValues(20, 120);
+  const FilterPriceSlider({
+    super.key,
+    required this.currentRangeValues,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _FilterPriceSliderState extends State<FilterPriceSlider> {
               ),
             ),
             Text(
-              '\$${_currentRangeValues.start.round()}-\$${_currentRangeValues.end.round()}',
+              '\$${currentRangeValues.start.round()}-\$${currentRangeValues.end.round()}',
               style: AppTextStyles.font14PrimaryMedium.copyWith(
                 color: AppColors.primary,
                 fontSize: 14.sp,
@@ -57,15 +57,11 @@ class _FilterPriceSliderState extends State<FilterPriceSlider> {
             ),
           ),
           child: RangeSlider(
-            values: _currentRangeValues,
+            values: currentRangeValues,
             min: 0,
             max: 200,
             divisions: 20,
-            onChanged: (RangeValues values) {
-              setState(() {
-                _currentRangeValues = values;
-              });
-            },
+            onChanged: onChanged,
           ),
         ),
       ],

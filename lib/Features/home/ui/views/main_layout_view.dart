@@ -3,6 +3,7 @@ import 'package:flutter_project/Features/events/ui/views/events_view.dart';
 import 'package:flutter_project/Features/profile/views/profile_view.dart';
 import '../../../../Core/theme/app_colors.dart';
 import 'home_view.dart';
+import '../widgets/home_view_body.dart';
 
 class MainLayoutView extends StatefulWidget {
   const MainLayoutView({super.key});

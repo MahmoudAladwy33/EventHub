@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Features/onBoarding/ui/on_boarding_screen_temp.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Core/di/dependency_injection.dart';
 import '../../../Core/routing/app_router.dart';
 import '../../../Core/theme/app_colors.dart';
 import '../../../Core/utlils/app_images.dart';
@@ -34,6 +36,14 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
     },
   ];
 
+  Future<void> _completeOnboarding() async {
+    final prefs = getIt<SharedPreferences>();
+    await prefs.setBool('has_seen_onboarding', true);
+    if (mounted) {
+      GoRouter.of(context).go(AppRouter.kSignInScreen);
+    }
+  }
+
   void _nextPage() {
     if (_currentPage < _pages.length - 1) {
       _pageController.nextPage(
@@ -41,7 +51,7 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
         curve: Curves.easeInOut,
       );
     } else {
-      GoRouter.of(context).push(AppRouter.kSignInScreen);
+      _completeOnboarding();
     }
   }
 
@@ -79,9 +89,7 @@ class _OnBoardingScreenBodyState extends State<OnBoardingScreenBody> {
                 children: [
 
                   TextButton(
-                    onPressed: () {
-                      GoRouter.of(context).push(AppRouter.kSignInScreen);
-                    },
+                    onPressed: _completeOnboarding,
                     child: Text(
                       'Skip',
                       style: TextStyle(

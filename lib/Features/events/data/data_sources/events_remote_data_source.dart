@@ -1,0 +1,147 @@
+import 'dart:convert';
+import '../../../../Core/utlils/isolate_parser.dart';
+import '../../../../Core/networking/ticketmaster_api.dart';
+import '../../../../Core/networking/ticketmaster_date_time.dart';
+import '../entities/event_query.dart';
+import '../models/event_dto.dart';
+
+class EventDtoPage {
+  const EventDtoPage({
+    required this.events,
+    required this.page,
+    required this.totalPages,
+  });
+
+  final List<EventDto> events;
+  final int page;
+  final int totalPages;
+}
+
+abstract class EventsRemoteDataSource {
+  Future<EventDtoPage> getEvents(EventQuery query);
+  Future<EventDto> getEventDetails(String eventId);
+}
+
+class EventsRemoteDataSourceImpl implements EventsRemoteDataSource {
+  const EventsRemoteDataSourceImpl(this._api);
+
+  final TicketmasterApi _api;
+
+  @override
+  Future<EventDtoPage> getEvents(EventQuery query) async {
+    final queryParameters = <String, dynamic>{
+      'size': query.size,
+      'page': query.page,
+    };
+
+    if (query.keyword.trim().isNotEmpty) {
+      queryParameters['keyword'] = query.keyword.trim();
+    }
+    if (query.city.trim().isNotEmpty && query.mode != EventListMode.upcoming) {
+      queryParameters['city'] = query.city.trim();
+    }
+    if (query.classificationName.trim().isNotEmpty) {
+      queryParameters['classificationName'] = query.classificationName.trim();
+    }
+
+    if (query.mode == EventListMode.upcoming) {
+      queryParameters.addAll({
+        'latlong': '40.7484,-73.9857',
+        'radius': 20,
+        'unit': 'km',
+        'sort': 'distance,asc',
+      });
+    } else if (query.mode == EventListMode.past) {
+      queryParameters.addAll({
+        'endDateTime': TicketmasterDateTime.format(DateTime.now()),
+        'sort': 'date,desc',
+      });
+    } else {
+      queryParameters['sort'] = 'date,asc';
+      final range = _dateRange(query);
+      queryParameters['startDateTime'] = TicketmasterDateTime.format(range.$1);
+      if (range.$2 != null) {
+        queryParameters['endDateTime'] = TicketmasterDateTime.format(range.$2!);
+      }
+    }
+
+    final response = await _api.getEvents(queryParameters);
+    return IsolateParser.run(
+      _parseEventPage,
+      _EventPageParserMessage(
+        responseBody: response,
+        fallbackPage: query.page,
+      ),
+    );
+  }
+
+  @override
+  Future<EventDto> getEventDetails(String eventId) async {
+    final response = await _api.getEventDetails(eventId);
+    return IsolateParser.run(_parseEventDetails, response);
+  }
+
+  (DateTime, DateTime?) _dateRange(EventQuery query) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    switch (query.datePreset) {
+      case EventDatePreset.today:
+        return (today, today.add(const Duration(days: 1)));
+      case EventDatePreset.tomorrow:
+        final tomorrow = today.add(const Duration(days: 1));
+        return (tomorrow, tomorrow.add(const Duration(days: 1)));
+      case EventDatePreset.thisWeek:
+        final daysUntilSunday = DateTime.sunday - today.weekday;
+        return (today, today.add(Duration(days: daysUntilSunday + 1)));
+      case EventDatePreset.custom:
+        final custom = query.customDate ?? today;
+        final start = DateTime(custom.year, custom.month, custom.day);
+        return (start, start.add(const Duration(days: 1)));
+      case EventDatePreset.any:
+        return (now, null);
+    }
+  }
+}
+
+class _EventPageParserMessage {
+  const _EventPageParserMessage({
+    required this.responseBody,
+    required this.fallbackPage,
+  });
+
+  final String responseBody;
+  final int fallbackPage;
+}
+
+EventDtoPage _parseEventPage(_EventPageParserMessage message) {
+  final data = _decodeMap(message.responseBody);
+  final embedded = _asMap(data['_embedded']);
+  final items = _asList(embedded?['events']);
+  final page = _asMap(data['page']);
+
+  return EventDtoPage(
+    events: items
+        .whereType<Map<String, dynamic>>()
+        .map(EventDto.fromJson)
+        .toList(),
+    page: (page?['number'] as num?)?.toInt() ?? message.fallbackPage,
+    totalPages: (page?['totalPages'] as num?)?.toInt() ?? 0,
+  );
+}
+
+EventDto _parseEventDetails(String responseBody) {
+  return EventDto.fromJson(_decodeMap(responseBody));
+}
+
+Map<String, dynamic> _decodeMap(String responseBody) {
+  final decoded = jsonDecode(responseBody);
+  return decoded is Map<String, dynamic> ? decoded : const {};
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  return value is Map<String, dynamic> ? value : null;
+}
+
+List<dynamic> _asList(Object? value) {
+  return value is List<dynamic> ? value : const [];
+}

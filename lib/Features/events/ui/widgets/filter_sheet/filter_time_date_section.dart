@@ -5,15 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../Core/theme/app_colors.dart';
 import '../../../../../Core/theme/app_text_styles.dart';
 
-class FilterTimeDateSection extends StatefulWidget {
-  const FilterTimeDateSection({super.key});
+class FilterTimeDateSection extends StatelessWidget {
+  final int selectedChip;
+  final ValueChanged<int> onChipChanged;
 
-  @override
-  State<FilterTimeDateSection> createState() => _FilterTimeDateSectionState();
-}
-
-class _FilterTimeDateSectionState extends State<FilterTimeDateSection> {
-  int _selectedChip = 1;
+  FilterTimeDateSection({
+    super.key,
+    required this.selectedChip,
+    required this.onChipChanged,
+  });
 
   final List<String> _chips = ['Today', 'Tomorrow', 'This week'];
 
@@ -33,9 +33,9 @@ class _FilterTimeDateSectionState extends State<FilterTimeDateSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(_chips.length, (index) {
-            final isSelected = _selectedChip == index;
+            final isSelected = selectedChip == index;
             return GestureDetector(
-              onTap: () => setState(() => _selectedChip = index),
+              onTap: () => onChipChanged(index),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 decoration: BoxDecoration(

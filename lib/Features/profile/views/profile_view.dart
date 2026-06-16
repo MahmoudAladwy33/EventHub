@@ -1,15 +1,47 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../Core/di/dependency_injection.dart';
+import '../../../Core/routing/app_router.dart';
 import '../../../Core/theme/app_colors.dart';
 import '../../../Core/theme/app_text_styles.dart';
+import '../../auth/data/repos/auth_repository.dart';
 import '../widgets/profile_stats_row.dart';
 import '../widgets/profile_tab.dart';
 import '../widgets/profile_tab_section.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  String _userName = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    final name = await getIt<AuthRepository>().getUserName();
+    if (mounted) {
+      setState(() {
+        _userName = name ?? 'Guest User';
+      });
+    }
+  }
+
+  void _handleSignOut() async {
+    await getIt<AuthRepository>().signOut();
+    if (mounted) {
+      GoRouter.of(context).go(AppRouter.kSignInScreen);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +55,19 @@ class ProfileView extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
+          PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: AppColors.black),
-            onPressed: () {},
+            onSelected: (value) {
+              if (value == 'sign_out') {
+                _handleSignOut();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'sign_out',
+                child: Text('Sign Out'),
+              ),
+            ],
           ),
         ],
         centerTitle: false,
@@ -74,7 +116,7 @@ class ProfileView extends StatelessWidget {
 
                   // Name
                   Text(
-                    'Ashfak Sayem',
+                    _userName,
                     style: AppTextStyles.font18BlackBold.copyWith(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,

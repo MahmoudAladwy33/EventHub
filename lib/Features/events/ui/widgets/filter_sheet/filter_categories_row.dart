@@ -5,15 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../Core/theme/app_colors.dart';
 import '../../../../../Core/theme/app_text_styles.dart';
 
-class FilterCategoriesRow extends StatefulWidget {
-  const FilterCategoriesRow({super.key});
+class FilterCategoriesRow extends StatelessWidget {
+  final String selectedCategory;
+  final ValueChanged<String> onCategoryChanged;
 
-  @override
-  State<FilterCategoriesRow> createState() => _FilterCategoriesRowState();
-}
-
-class _FilterCategoriesRowState extends State<FilterCategoriesRow> {
-  int _selectedIndex = 0;
+  FilterCategoriesRow({
+    super.key,
+    required this.selectedCategory,
+    required this.onCategoryChanged,
+  });
 
   final List<Map<String, dynamic>> _categories = [
     {'name': 'Sports', 'icon': Icons.sports_basketball_outlined},
@@ -33,12 +33,10 @@ class _FilterCategoriesRowState extends State<FilterCategoriesRow> {
             scrollDirection: Axis.horizontal,
             itemCount: _categories.length,
             itemBuilder: (context, index) {
-              final isSelected = _selectedIndex == index;
+              final isSelected = _categories[index]['name'] == selectedCategory;
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
+                  onCategoryChanged(_categories[index]['name']);
                 },
                 child: Padding(
                   padding: EdgeInsets.only(right: 16.w),
