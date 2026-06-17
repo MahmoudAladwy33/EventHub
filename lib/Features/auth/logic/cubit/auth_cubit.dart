@@ -69,4 +69,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<String?> getSavedPassword() async {
     return await _repository.getSavedPassword();
   }
+
+  Future<bool> getRememberMe() async {
+    return await _repository.getRememberMe();
+  }
 }

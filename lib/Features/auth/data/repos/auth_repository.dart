@@ -21,6 +21,7 @@ abstract class AuthRepository {
   Future<String?> getUserName();
   Future<String?> getSavedEmail();
   Future<String?> getSavedPassword();
+  Future<bool> getRememberMe();
   Future<void> signOut();
 }
 
@@ -59,6 +60,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final savedEmail = _prefs.getString('user_email');
       final savedPassword = await _secureStorage.read(key: 'user_password');
       if (savedEmail == email && savedPassword == password) {
+        await _prefs.setBool('remember_me', rememberMe);
         if (rememberMe) {
           await _prefs.setBool('is_logged_in', true);
         }
@@ -89,6 +91,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<String?> getSavedPassword() async {
     return await _secureStorage.read(key: 'user_password');
+  }
+
+  @override
+  Future<bool> getRememberMe() async {
+    return _prefs.getBool('remember_me') ?? false;
   }
 
   @override

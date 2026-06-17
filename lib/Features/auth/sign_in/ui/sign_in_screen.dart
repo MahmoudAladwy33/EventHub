@@ -23,7 +23,28 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _rememberMe = true;
+  bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  Future<void> _loadSavedCredentials() async {
+    final authCubit = getIt<AuthCubit>();
+    final rememberMe = await authCubit.getRememberMe();
+    
+    if (rememberMe && mounted) {
+      final savedEmail = await authCubit.getSavedEmail();
+      final savedPassword = await authCubit.getSavedPassword();
+      setState(() {
+        _rememberMe = true;
+        if (savedEmail != null) _emailController.text = savedEmail;
+        if (savedPassword != null) _passwordController.text = savedPassword;
+      });
+    }
+  }
 
   @override
   void dispose() {
